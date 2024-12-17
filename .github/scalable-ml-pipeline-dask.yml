@@ -1,0 +1,60 @@
+name: E2E Pipeline Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  e2e-pipeline:
+    name: Run E2E Pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Code
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set Up Python
+      - name: 🐍 Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      # Step 3: Install Dependencies
+      - name: 🔧 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install dask[complete] dask-ml scikit-learn pandas matplotlib pyarrow tqdm
+
+      # Step 4: Download and Convert Parquet to CSV
+      - name: 📥 Download and Convert Dataset
+        run: |
+          wget https://d37ci6vzurychx.cloudfront.net/trip-data/fhvhv_tripdata_2024-09.parquet -O fhvhv_tripdata_2024-09.parquet
+          python3 -c "import pandas as pd; pd.read_parquet('fhvhv_tripdata_2024-09.parquet').to_csv('taxi_tripdata.csv', index=False)"
+        shell: bash
+
+      # Step 5: Run the Pipeline
+      - name: 🚀 Run ML Pipeline
+        run: |
+          python dask_pipeline.py --data "taxi_tripdata.csv"
+
+      # Step 6: Upload Outputs (Results & Visualizations)
+      - name: 📤 Upload Outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-outputs
+          path: |
+            taxi_tripdata.csv
+            outputs/*.png
+            results.txt
+
+      # Step 7: Verify Results
+      - name: ✅ Verify Results
+        run: |
+          echo "Pipeline executed successfully!"
+          ls -lh outputs/ || echo "Outputs not found!"
