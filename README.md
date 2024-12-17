@@ -53,7 +53,7 @@ This project builds a scalable machine learning pipeline using Dask and Dask-ML 
 Run the script with the dataset:
 
 ```bash
-python dask_pipeline.py --data "taxi_tripdata.csv"
+python3 dask_pipeline.py --data "taxi_tripdata.csv"
 ```
 
 ## **Performance Comparison**
