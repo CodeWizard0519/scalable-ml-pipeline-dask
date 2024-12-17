@@ -25,7 +25,7 @@ This project builds a scalable machine learning pipeline using Dask and Dask-ML 
   - `driver_pay` - Driver payment  
   - `tips` - Tip amount  
   - `base_passenger_fare` - Fare  
-- **Source**: [NYC Taxi Dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+- **Source**: [NYC Taxi Dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page && https://d37ci6vzurychx.cloudfront.net/trip-data/fhvhv_tripdata_2024-09.parquet)
 
 
 #### **Pipeline Workflow**
