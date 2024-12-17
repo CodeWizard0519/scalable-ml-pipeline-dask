@@ -27,6 +27,12 @@ This project builds a scalable machine learning pipeline using Dask and Dask-ML 
   - `base_passenger_fare` - Fare  
 - **Source**: [NYC Taxi Dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page && https://d37ci6vzurychx.cloudfront.net/trip-data/fhvhv_tripdata_2024-09.parquet)
 
+   - ***Download and Convert the parquet to csv***
+
+      ***Download:-***  wget https://d37ci6vzurychx.cloudfront.net/trip-data/fhvhv_tripdata_2024-09.parquet
+
+      ***Convert :-***  python3 -c "import pandas as pd; pd.read_parquet('fhvhv_tripdata_2024-09.parquet').to_csv('taxi_tripdata.csv', index=False)"
+
 
 #### **Pipeline Workflow**
 
